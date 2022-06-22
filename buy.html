@@ -118,6 +118,18 @@
                     </div>
 
                     <h5 class="shape">數量</h5>
+                    <div class="d-flex justify-content-between">
+                        <div id='counter' method='POST' action='#'>
+                            <button type='button' class='qtyminus' field='quantity'>-</button>
+                            <input type='text' name='quantity' value='0' class='qty' />
+                            <button type='button' class='qtyplus' field='quantity'>+</button>
+                        </div>
+
+                        <div class="d-flex align-items-end" style="margin-right: 27px">
+                            <button class="btn-coolest2" onclick="addToCart()">加入購物車</button>
+                            <button class="btn-coolest2" onclick="">直接購買</button>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -155,17 +167,16 @@
         </div>
     </section>
     <!-- </div> -->
-    <div class="circle-round"></div>
 
     <script>
-        $("#circle1").attr("style", "visibility: visible");
+        $("#circle1").toggleClass("circle-round-onSelected");
         for (var i = 1; i <= 8; i++) {
             var ID = "circle" + i;
             var oDiv = document.getElementById(ID);
             oDiv.addEventListener("click", function () {
                 // html = '<div class="color-panel circle-round"></div>';
-                $(".circle-round").attr("style", "visibility: hidden");
-                $("#" + this.id).attr("style", "visibility: visible");
+                $(".circle-round").removeClass("circle-round-onSelected");
+                $("#" + this.id).toggleClass("circle-round-onSelected");
                 var img = "/src/image/_1.png";
                 switch (this.id) {
                     case "circle1":
@@ -201,6 +212,71 @@
                 // console.log(this.id);
             });
             // console.log(oDiv);
+        }
+
+        $(function () {
+            // This button will increment the value
+            $('.qtyplus').click(function (e) {
+                // Stop acting like a button
+                e.preventDefault();
+                // Get the field name
+                fieldName = $(this).attr('field');
+                // Get its current value
+                var currentVal = parseInt($('input[name=' + fieldName + ']').val());
+                // If is not undefined
+                if (!isNaN(currentVal)) {
+                    // Increment
+                    $('input[name=' + fieldName + ']').val(currentVal + 1);
+                } else {
+                    // Otherwise put a 0 there
+                    $('input[name=' + fieldName + ']').val(0);
+                }
+            });
+            // This button will decrement the value till 0
+            $(".qtyminus").click(function (e) {
+                // Stop acting like a button
+                e.preventDefault();
+                // Get the field name
+                fieldName = $(this).attr('field');
+                // Get its current value
+                var currentVal = parseInt($('input[name=' + fieldName + ']').val());
+                // If it isn't undefined or its greater than 0
+                if (!isNaN(currentVal) && currentVal > 0) {
+                    // Decrement one
+                    $('input[name=' + fieldName + ']').val(currentVal - 1);
+                } else {
+                    // Otherwise put a 0 there
+                    $('input[name=' + fieldName + ']').val(0);
+                }
+            });
+        });
+
+        $(".button-container>.button").each(function () {
+            $(this).click(() => {
+                $(".button-container>.button").removeClass("button-onSelected");
+                $(this).addClass("button-onSelected");
+            })
+        })
+
+
+
+        function addToCart() {
+            let name = $(".button-container>.button-onSelected").find("h5").text();
+            // TODO convert id to color
+            let color = $(".circle-round-onSelected").attr("id");
+            let count = parseInt($('input[name=' + fieldName + ']').val());
+            console.log({
+                "name": name,
+                "color": color,
+                "count": count
+            });
+
+            // TODO add to cart
+        }
+
+        function directPurchase() {
+            window.location("/account.html");
+            // TODO direct purchase
         }
     </script>
 </body>

@@ -83,8 +83,8 @@
                         <img src="src/image/logo.png" width="130px" alt="">
                         <span>黃韋誠</span>
                     </div>
-                    <ul>
-                        <li>
+                    <ul id="account-sidebar-list">
+                        <li class="onSelected">
                             <a href="#">
                                 <i class='bx bx-user'></i>
                                 <span>會員資料</span>
@@ -184,6 +184,24 @@
             },
         });
 
+        $("#account-sidebar-list>li").each(function (index) {
+            $(this).click(() => {
+                $("#account-sidebar-list>li").removeClass("onSelected");
+                $(this).addClass("onSelected");
+                switch ($(this).find("span").text()) {
+                    case "會員資料":
+                        memberInfo_DiaplayUserInfo();
+                        break;
+                    case "訂單資訊":
+                        orderInfo_ViewAllOrderInfo();
+                        break;
+                }
+                // console.log($(this).find("span").text());
+
+            });
+        });
+
+
         const handleSubmit = (event) => {
             event.preventDefault();
             const data = new FormData(event.currentTarget);
@@ -197,15 +215,7 @@
             // TODO UPLOAD DATA
 
 
-            root.render(
-            <ThemeProvider theme={theme}>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
-                <Container maxWidth={false}>
-                    <MemberInfo />
-                </Container>
-            </ThemeProvider>,
-        );
+            memberInfo_DiaplayUserInfo();
         };
 
 
@@ -221,7 +231,7 @@
                         }}
                     >
                         <TextField disabled fullWidth margin="normal" defaultValue="黃韋誠" className="member-info-TextField" label="姓名" variant="outlined" name="name" />
-                        <TextField disabled fullWidth margin="normal" defaultValue="b10917013@gemail.yuntech.edu.tw" className="member-info-TextField" label="電子郵件" variant="outlined" name="email" />
+                        <TextField disabled fullWidth margin="normal" defaultValue="0987-654-321" className="member-info-TextField" label="行動電話" variant="outlined" name="phone" />
                     </Box>
                     <Box
                         sx={{
@@ -230,7 +240,7 @@
                             '& > :not(style)': { m: 2 },
                         }}
                     >
-                        <TextField disabled fullWidth margin="normal" defaultValue="0987-654-321" className="member-info-TextField" label="行動電話" variant="outlined" name="phone" />
+                        <TextField disabled fullWidth margin="normal" defaultValue="b10917013@gemail.yuntech.edu.tw" className="member-info-TextField" label="電子郵件" variant="outlined" name="email" />
                     </Box>
                     <Box
                         sx={{
@@ -243,7 +253,7 @@
                     </Box>
                     <div className="t">
                         <a id="editUserInfo" herf="#" onClick={() => {
-                            enableEditUserInfo();
+                            memberInfo_EnableEditUserInfo();
                         }} >修改會員資料</a>
                     </div>
                 </form>
@@ -272,7 +282,7 @@
                         }}
                     >
                         <TextField fullWidth margin="normal" defaultValue="黃韋誠" className="member-info-TextField" label="姓名" variant="outlined" name="name" />
-                        <TextField fullWidth margin="normal" defaultValue="b10917013@gemail.yuntech.edu.tw" className="member-info-TextField" label="電子郵件" variant="outlined" name="email" />
+                        <TextField fullWidth margin="normal" defaultValue="0987-654-321" className="member-info-TextField" label="行動電話" variant="outlined" name="phone" />
                     </Box>
                     <Box
                         sx={{
@@ -281,7 +291,7 @@
                             '& > :not(style)': { m: 2 },
                         }}
                     >
-                        <TextField fullWidth margin="normal" defaultValue="0987-654-321" className="member-info-TextField" label="行動電話" variant="outlined" name="phone" />
+                        <TextField fullWidth margin="normal" defaultValue="b10917013@gemail.yuntech.edu.tw" className="member-info-TextField" label="電子郵件" variant="outlined" name="email" />
                     </Box>
                     <Box
                         sx={{
@@ -297,20 +307,24 @@
             )
         }
 
+        // render element
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(
-            <ThemeProvider theme={theme}>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
-                <Container maxWidth={false}>
-                    <MemberInfo />
-                </Container>
-            </ThemeProvider>,
-        );
+        // memberInfo_DiaplayUserInfo();
+        orderInfo_ViewAllOrderInfo();
 
-        // $('#editUserInfo').click(function () { enableEditUserInfo(); return false; });
+        function memberInfo_DiaplayUserInfo() {
+            root.render(
+                <ThemeProvider theme={theme}>
+                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                    <CssBaseline />
+                    <Container maxWidth={false}>
+                        <MemberInfo />
+                    </Container>
+                </ThemeProvider>,
+            );
+        }
 
-        function enableEditUserInfo() {
+        function memberInfo_EnableEditUserInfo() {
             root.render(
                 <ThemeProvider theme={theme}>
                     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
@@ -320,7 +334,48 @@
                     </Container>
                 </ThemeProvider>,
             );
-            // console.log("test");
+        }
+
+        function orderInfo_ViewAllOrderInfo() {
+            root.render(
+                <ThemeProvider theme={theme}>
+                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                    <CssBaseline />
+                    <Container maxWidth={false}>
+                        <form className="member-info" action="" method="POST">
+                            <h1>訂單資訊</h1>
+                            <div id="order-container"></div>
+                        </form>
+                    </Container>
+                </ThemeProvider>,
+            );
+
+            // TODO: use jquery to operate element
+            let dataOrders;
+            let dataOrderDetial;
+
+            function htmlOrderDetial(dataOrderDetial){
+                var htmlItem = "";
+                for(item in dataOrderDetial){
+                    let name
+                    let quantity
+                    let price
+                    htmlItem +=
+                        '<div class="order-detial-item list-group-item d-flex align-items-center flex-row">' +
+                        '< img src = ' + imgSrc + ' width = "130px" alt = "" >' +
+                        '<div class="text">' +
+                        '<h4>' + name + '</h4>' +
+                        '<small>x' + quantity + '</small>' +
+                        '</div>' +
+                        '<span>$' + price + '</span>' +
+                        '</div > ';
+                }
+                return htmlItem;
+            }
+
+
+            $("#order-container").append()
+
         }
     </script>
 </body>
