@@ -1,34 +1,12 @@
-// import React from 'react'
-// import ReactDOM from 'react-dom'
-
-// function accountBar(){
-//     return (
-//         <div>
-//             <H1>HAHAHA</H1>
-//         </div>
-//     )
-// }
-
-// const aaaa=(
-//     <div>
-//         <H1>HAHAHA</H1>
-//     </div>
-// )
-
-// ReactDOM.render(
-//     <H1>HAHAHA</H1>,
-//     document.getElementById('root')
-// )
-
-fetch("data-test.json")
-    .then(response => {
-        return response.json();
-    })
-    .then(jsondata => {
-        $("#root").append(htmlOrder(jsondata));
-        // htmlOrder(jsondata);
-        return console.log(jsondata);
-    });
+// fetch("data-test.json")
+//     .then(response => {
+//         return response.json();
+//     })
+//     .then(jsondata => {
+//         $("#root").append(htmlOrder(jsondata));
+//         // htmlOrder(jsondata);
+//         return console.log(jsondata);
+//     });
 
 
 function htmlOrder(raw) {

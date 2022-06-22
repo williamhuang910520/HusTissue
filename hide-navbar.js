@@ -6,7 +6,7 @@ window.onscroll = function () {
     document.getElementById("account-sidebar").style.top = "110px";
   } else {
     document.getElementById("navbar").style.top = "-85px";
-    document.getElementById("account-sidebar").style.top = "25px";
+    document.getElementById("account-sidebar").style.top = "50px";
   }
   prevScrollpos = currentScrollPos;
 }
