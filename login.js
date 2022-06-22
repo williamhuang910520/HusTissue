@@ -1,3 +1,5 @@
+var backendurl="https://localhost:7023";
+//修改這裡來改變api伺服器位置
 function LoginSubmit(email,password){
     var arr=
     {
@@ -6,7 +8,7 @@ function LoginSubmit(email,password){
     };
 
     $.ajax({
-        url: 'https://localhost:7023/api/user',
+        url: backendurl+'/api/user',
         type: 'POST',
         data: JSON.stringify(arr),
         contentType: 'application/json',
@@ -16,6 +18,10 @@ function LoginSubmit(email,password){
             {
                 $.cookie('session', data.session);
                 window.location ="/account.html";
+            }
+            else
+            {
+                alert("密碼錯誤!");
             }
         }
 
@@ -28,7 +34,7 @@ function LoginSubmit(email,password){
     };
     var pathname = $(location).attr('pathname');
     $.ajax({
-        url: 'https://localhost:7023/api/session',
+        url: backendurl+'/api/session',
         type: 'POST',
         data: JSON.stringify(arr),
         contentType: 'application/json',
@@ -38,7 +44,11 @@ function LoginSubmit(email,password){
             {
                 document.getElementById('login-member-center').innerHTML ="會員中心";
                 $( "#login-member-center").attr("href","/account.html");
-                $( "#lnavbarliItems").append('<li class="nav-item"><a class="nav-link active" href="/buy.html">購買</a></li>');
+                $( "#lnavbarliItems").append('<li class="nav-item"><a class="nav-link active" id="logout-li">登出</a></li>');
+                $("#logout-li").click(function() {
+                    $.cookie('session',null)
+                    window.location ="/index.html";
+                  });
                 if(pathname=="/login.html")
                 {
                     window.location ="/account.html";
@@ -56,3 +66,5 @@ function LoginSubmit(email,password){
 
     });
 });
+
+
