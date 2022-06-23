@@ -1,4 +1,4 @@
-var backendurl="https://localhost:7023";
+var backendurl="https://hustissueweb.azurewebsites.net/";
 //修改這裡來改變api伺服器位置
 function LoginSubmit(email,password){
     var arr=
