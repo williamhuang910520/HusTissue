@@ -3,7 +3,7 @@
         {
             "orderID": 1,
             "orderdate": "2022-06-27 13:56",
-            "inshipped": true,
+            "isshipped": true,
             "totalprice": 500,
             "OrderDetail": [
                 {
@@ -23,7 +23,7 @@
         {
             "orderID": 2,
             "orderdate": "2022-06-28 23:46",
-            "inshipped": true,
+            "isshipped": true,
             "totalprice": 500,
             "OrderDetail": [
                 {
@@ -43,7 +43,7 @@
         {
             "orderID": 3,
             "orderdate": "2022-06-28 23:46",
-            "inshipped": true,
+            "isshipped": true,
             "totalprice": 500,
             "OrderDetail": [
                 {

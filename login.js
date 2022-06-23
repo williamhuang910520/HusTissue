@@ -1,4 +1,5 @@
-var backendurl="https://localhost:7023";
+var backendurl="https://hustissuewebapi.azurewebsites.net";
+var jsondata={}
 //修改這裡來改變api伺服器位置
 function LoginSubmit(email,password){
     var arr=
@@ -53,6 +54,10 @@ function LoginSubmit(email,password){
                 {
                     window.location ="/account.html";
                 }
+                if(pathname=="/account.html")
+                {
+                    getmemberdata();
+                }
             }
             else
             {
@@ -67,4 +72,65 @@ function LoginSubmit(email,password){
     });
 });
 
+function getmemberdata(){
+    var arr=
+    {
+        Session: $.cookie('session')
+    };
 
+    $.ajax({
+        url: backendurl+'/api/account',
+        type: 'POST',
+        data: JSON.stringify(arr),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data){
+
+        }
+
+    });    
+ }
+ function Postmemberdata(){
+    var arr=
+    {
+        Session: $.cookie('session'),
+        address: "測試用地址",
+        email: "admin@gmail.com",
+        name: "admin",
+        phone: "0912345678"
+    };
+
+    $.ajax({
+        url: backendurl+'/api/account',
+        type: 'POST',
+        data: JSON.stringify(arr),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data){
+
+        }
+
+    });    
+ }
+
+ function getordersdetail(){
+    var arr=
+    {
+        Session: $.cookie('session')
+    };
+
+    $.ajax({
+        url: backendurl+'/api/ordersdetail',
+        type: 'POST',
+        data: JSON.stringify(arr),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data){
+            var res={Orders:data};
+            $("#order-container").append(htmlOrder(res));
+            console.log("success")
+            return res;
+        }
+
+    });    
+ }
