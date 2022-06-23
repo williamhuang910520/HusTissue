@@ -42,7 +42,7 @@ function LoginSubmit(email,password){
         success: function(data){
             if(data.loginsuccess)
             {
-                //document.getElementById('login-member-center').innerHTML ="會員中心";
+                document.getElementById('login-member-center').innerHTML ="會員中心";
                 $( "#login-member-center").attr("href","/account.html");
                 $( "#lnavbarliItems").append('<li class="nav-item"><a class="nav-link active" id="logout-li">登出</a></li>');
                 $("#logout-li").click(function() {
@@ -55,8 +55,9 @@ function LoginSubmit(email,password){
                 }
                 if(pathname=="/account.html")
                 {
-                    getmemberdata()
+                    getmemberdata();
                 }
+                getordersdetail()
             }
             else
             {
@@ -79,6 +80,47 @@ function getmemberdata(){
 
     $.ajax({
         url: backendurl+'/api/account',
+        type: 'POST',
+        data: JSON.stringify(arr),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data){
+
+        }
+
+    });    
+ }
+ function Postmemberdata(){
+    var arr=
+    {
+        Session: $.cookie('session'),
+        address: "測試用地址",
+        email: "admin@gmail.com",
+        name: "admin",
+        phone: "0912345678"
+    };
+
+    $.ajax({
+        url: backendurl+'/api/account',
+        type: 'POST',
+        data: JSON.stringify(arr),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data){
+
+        }
+
+    });    
+ }
+
+ function getordersdetail(){
+    var arr=
+    {
+        Session: $.cookie('session')
+    };
+
+    $.ajax({
+        url: backendurl+'/api/ordersdetail',
         type: 'POST',
         data: JSON.stringify(arr),
         contentType: 'application/json',
