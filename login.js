@@ -56,10 +56,11 @@ function LoginSubmit(email,password){
                 }
                 if(pathname=="/account.html")
                 {
-                    if($.cookie('toorders'))
+                    if($.cookie('toorders')==true)
                     {
                         $.cookie('toorders',false);
                         orderInfo_ViewAllOrderInfo();
+                        
                     }
                 }
             }
