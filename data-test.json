@@ -30,13 +30,13 @@
                     "productname": "HusTissueULTRA",
                     "value": 1,
                     "price": 100,
-                    "color": "org"
+                    "color": "Orange"
                 },
                 {
                     "productname": "HusTissue",
                     "value": 8,
                     "price": 50,
-                    "color": "pink"
+                    "color": "blue"
                 }
             ]
         },
@@ -50,13 +50,13 @@
                     "productname": "HusTissueULTRA",
                     "value": 1,
                     "price": 100,
-                    "color": "green"
+                    "color": "Orange"
                 },
                 {
                     "productname": "HusTissuePRO",
                     "value": 8,
                     "price": 50,
-                    "color": "white"
+                    "color": "blue"
                 }
             ]
         }
