@@ -101,7 +101,7 @@ function getmemberdata(){
     };
 
     $.ajax({
-        url: backendurl+'/api/account',
+        url: backendurl+'/api/updateaccount',
         type: 'POST',
         data: JSON.stringify(arr),
         contentType: 'application/json',

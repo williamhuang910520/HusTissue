@@ -31,12 +31,13 @@
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="jquery.cookie.js"></script>
     <script src="login.js"></script>
+
     <!--登入api-->
+    <script src="jquery-dateformat.min.js"></script>
 
     <script src="hide-navbar.js"></script>
     <script src="render-orders.js"></script>
     <!-- <script type="text/javascript" src="data-test.json"></script> -->
-
 </head>
 
 <body class="bg-dark">
@@ -87,7 +88,7 @@
                 <div id="account-sidebar" class="account-sidebar ">
                     <div class="logo-content">
                         <img src="src/image/logo.png" width="130px" alt="">
-                        <span>黃韋誠</span>
+                        <span id="side-name-tag"></span>
                     </div>
                     <ul id="account-sidebar-list">
                         <li class="onSelected">
@@ -212,6 +213,35 @@
         const handleSubmit = (event) => {
             event.preventDefault();
             const data = new FormData(event.currentTarget);
+
+
+
+            var arr =
+            {
+                Session: $.cookie('session'),
+                address: data.get('address'),
+                email: data.get('email'),
+                name: data.get('name'),
+                phone: data.get('phone')
+            };
+
+            $.ajax({
+                url: backendurl + '/api/updateaccount',
+                type: 'POST',
+                data: JSON.stringify(arr),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    memberInfo_DiaplayUserInfo();
+                }
+
+            });
+
+
+
+
+
             console.log({
                 name: data.get('name'),
                 email: data.get('email'),
@@ -222,11 +252,11 @@
             // TODO UPLOAD DATA
 
 
-            memberInfo_DiaplayUserInfo();
         };
 
 
-        function MemberInfo() {
+        function MemberInfo(userdata) {
+            console.log(userdata);
             return (
                 <form className="member-info" action="" method="POST">
                     <h1>會員資料</h1>
@@ -237,8 +267,8 @@
                             '& > :not(style)': { m: 2 },
                         }}
                     >
-                        <TextField disabled fullWidth margin="normal" defaultValue="黃韋誠" className="member-info-TextField" label="姓名" variant="outlined" name="name" />
-                        <TextField disabled fullWidth margin="normal" defaultValue="0987-654-321" className="member-info-TextField" label="行動電話" variant="outlined" name="phone" />
+                        <TextField disabled fullWidth margin="normal" defaultValue={userdata.user.name} className="member-info-TextField" label="姓名" variant="outlined" name="name" />
+                        <TextField disabled fullWidth margin="normal" defaultValue={userdata.user.phone} className="member-info-TextField" label="行動電話" variant="outlined" name="phone" />
                     </Box>
                     <Box
                         sx={{
@@ -247,7 +277,7 @@
                             '& > :not(style)': { m: 2 },
                         }}
                     >
-                        <TextField disabled fullWidth margin="normal" defaultValue="b10917013@gemail.yuntech.edu.tw" className="member-info-TextField" label="電子郵件" variant="outlined" name="email" />
+                        <TextField disabled fullWidth margin="normal" defaultValue={userdata.user.email} className="member-info-TextField" label="電子郵件" variant="outlined" name="email" />
                     </Box>
                     <Box
                         sx={{
@@ -256,7 +286,7 @@
                             '& > :not(style)': { m: 2 },
                         }}
                     >
-                        <TextField disabled fullWidth margin="normal" defaultValue="雲林縣斗六市大學路三段123號" className="member-info-TextField" label="配送地址" variant="outlined" name="address" />
+                        <TextField disabled fullWidth margin="normal" defaultValue={userdata.user.address} className="member-info-TextField" label="配送地址" variant="outlined" name="address" />
                     </Box>
                     <div className="t">
                         <a id="editUserInfo" herf="#" onClick={() => {
@@ -267,7 +297,8 @@
             )
         }
 
-        function MemberInfoEditable() {
+        function MemberInfoEditable(userdata) {
+
             return (
                 <Box component="form" onSubmit={handleSubmit} className="member-info" action="" method="POST">
                     <div className="d-flex justify-content-between">
@@ -288,8 +319,8 @@
                             '& > :not(style)': { m: 2 },
                         }}
                     >
-                        <TextField fullWidth margin="normal" defaultValue="黃韋誠" className="member-info-TextField" label="姓名" variant="outlined" name="name" />
-                        <TextField fullWidth margin="normal" defaultValue="0987-654-321" className="member-info-TextField" label="行動電話" variant="outlined" name="phone" />
+                        <TextField fullWidth margin="normal" defaultValue={userdata.user.name} className="member-info-TextField" label="姓名" variant="outlined" name="name" />
+                        <TextField fullWidth margin="normal" defaultValue={userdata.user.phone} className="member-info-TextField" label="行動電話" variant="outlined" name="phone" />
                     </Box>
                     <Box
                         sx={{
@@ -298,7 +329,7 @@
                             '& > :not(style)': { m: 2 },
                         }}
                     >
-                        <TextField fullWidth margin="normal" defaultValue="b10917013@gemail.yuntech.edu.tw" className="member-info-TextField" label="電子郵件" variant="outlined" name="email" />
+                        <TextField fullWidth margin="normal" defaultValue={userdata.user.email} className="member-info-TextField" label="電子郵件" variant="outlined" name="email" />
                     </Box>
                     <Box
                         sx={{
@@ -307,7 +338,7 @@
                             '& > :not(style)': { m: 2 },
                         }}
                     >
-                        <TextField fullWidth margin="normal" defaultValue="雲林縣斗六市大學路三段123號" className="member-info-TextField" label="配送地址" variant="outlined" name="address" />
+                        <TextField fullWidth margin="normal" defaultValue={userdata.user.address} className="member-info-TextField" label="配送地址" variant="outlined" name="address" />
                     </Box>
 
                 </Box>
@@ -319,28 +350,64 @@
         memberInfo_DiaplayUserInfo();
         // orderInfo_ViewAllOrderInfo();
 
+
         function memberInfo_DiaplayUserInfo() {
-            root.render(
-                <ThemeProvider theme={theme}>
-                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                    <CssBaseline />
-                    <Container maxWidth={false}>
-                        <MemberInfo />
-                    </Container>
-                </ThemeProvider>,
-            );
+            var arr =
+            {
+                Session: $.cookie('session')
+            };
+
+            $.ajax({
+                url: backendurl + '/api/account',
+                type: 'POST',
+                data: JSON.stringify(arr),
+                contentType: 'application/json',
+
+                dataType: 'json',
+                success: function (data) {
+                    $("#side-name-tag").text(data.name);
+                    root.render(
+                        <ThemeProvider theme={theme}>
+                            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                            <CssBaseline />
+                            <Container maxWidth={false}>
+                                <MemberInfo user={data} />
+                            </Container>
+                        </ThemeProvider>,
+                    );
+                }
+            });
+
         }
 
         function memberInfo_EnableEditUserInfo() {
-            root.render(
-                <ThemeProvider theme={theme}>
-                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                    <CssBaseline />
-                    <Container maxWidth={false}>
-                        <MemberInfoEditable />
-                    </Container>
-                </ThemeProvider>,
-            );
+            var arr =
+            {
+                Session: $.cookie('session')
+            };
+
+            $.ajax({
+                url: backendurl + '/api/account',
+                type: 'POST',
+                data: JSON.stringify(arr),
+                contentType: 'application/json',
+
+                dataType: 'json',
+                success: function (data) {
+                    $("#side-name-tag").text(data.name);
+                    root.render(
+                        <ThemeProvider theme={theme}>
+                            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                            <CssBaseline />
+                            <Container maxWidth={false}>
+                                <MemberInfoEditable user={data} />
+                            </Container>
+                        </ThemeProvider>,
+                    );
+
+                }
+            });
+
         }
 
         function orderInfo_ViewAllOrderInfo() {
@@ -358,9 +425,9 @@
             );
             console.log($("#order-container"));
             getordersdetail()
-            
-               
-                
+
+
+
 
         }
 
