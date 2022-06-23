@@ -60,7 +60,6 @@ function LoginSubmit(email,password){
                     {
                         $.cookie('toorders',false);
                         orderInfo_ViewAllOrderInfo();
-
                     }
                 }
             }
