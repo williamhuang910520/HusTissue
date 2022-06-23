@@ -42,7 +42,7 @@ function LoginSubmit(email,password){
         success: function(data){
             if(data.loginsuccess)
             {
-                document.getElementById('login-member-center').innerHTML ="會員中心";
+                //document.getElementById('login-member-center').innerHTML ="會員中心";
                 $( "#login-member-center").attr("href","/account.html");
                 $( "#lnavbarliItems").append('<li class="nav-item"><a class="nav-link active" id="logout-li">登出</a></li>');
                 $("#logout-li").click(function() {
@@ -52,6 +52,10 @@ function LoginSubmit(email,password){
                 if(pathname=="/login.html")
                 {
                     window.location ="/account.html";
+                }
+                if(pathname=="/account.html")
+                {
+                    getmemberdata()
                 }
             }
             else
@@ -67,4 +71,21 @@ function LoginSubmit(email,password){
     });
 });
 
+function getmemberdata(){
+    var arr=
+    {
+        Session: $.cookie('session')
+    };
 
+    $.ajax({
+        url: backendurl+'/api/account',
+        type: 'POST',
+        data: JSON.stringify(arr),
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function(data){
+
+        }
+
+    });    
+ }
