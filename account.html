@@ -356,18 +356,11 @@
                     </Container>
                 </ThemeProvider>,
             );
-
             console.log($("#order-container"));
-
-            fetch("data-test.json")
-                .then(response => {
-                    return response.json();
-                })
-                .then(jsondata => {
-                    $("#order-container").append(htmlOrder(jsondata));
-                    // htmlOrder(jsondata);
-                    return console.log(jsondata);
-                });
+            getordersdetail()
+            
+               
+                
 
         }
 

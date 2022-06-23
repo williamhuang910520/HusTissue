@@ -289,10 +289,10 @@
                     color="cyan";
                     break;
                     case "circle5":
-                    color="blue";
+                    color="green";
                     break;
                     case "circle6":
-                    color="red";
+                    color="blue";
                     break;
                     case "circle7":
                     color="black";
@@ -331,7 +331,7 @@
         }
 
         function directPurchase() {
-            addToCart()
+            addToCart();
             let sendorder=
             {
                 Session: $.cookie('session'),
@@ -345,6 +345,7 @@
         dataType: 'json',
         success: function(data){
             //carts=[];
+            alert("成功購買");
         }
 
         });

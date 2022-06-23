@@ -7,29 +7,34 @@
 //         // htmlOrder(jsondata);
 //         return console.log(jsondata);
 //     });
-
+function addHours(numOfHours, date = new Date()) {
+    date.setTime(date.getTime() + numOfHours * 60 * 60 * 1000);
+  
+    return date;
+  }
 
 function htmlOrder(raw) {
     console.log(raw["Orders"]);
     let htmlItem = "";
     for (let i in raw["Orders"]) {
         let dataOrder = raw["Orders"][i];
-        console.log(htmlOrderDetial(dataOrder["OrderDetail"]));
-
+        console.log(htmlOrderDetial(dataOrder["ordersDetail"]));
         let orderID = dataOrder["orderID"];
         let orderdate = dataOrder["orderdate"];
-        let inshipped = dataOrder["inshipped"];
+        let TaiwanDateTime=new Date(orderdate);
+        TaiwanDateTime=addHours(8,TaiwanDateTime);
+        console.log(TaiwanDateTime);
+        let isshipped = dataOrder["isshipped"];
         let totalprice = dataOrder["totalprice"];
-
         htmlItem +=
             '<div class="order-item">' +
             '<div class="d-flex justify-content-between align-items-center header">' +
-            '<h2>訂單編號' + orderID + '123AD3</h2>' +
-            '<div class="btn-coolest-">' + (inshipped?'已送達':'未送達') + '</div>' +
+            '<h2>訂單編號#0000' + orderID + '</h2>' +
+            '<div class="btn-coolest-">' + (isshipped?'已送達':'未送達') + '</div>' +
             '</div>' +
-            htmlOrderDetial(dataOrder["OrderDetail"]) +
+            htmlOrderDetial(dataOrder["ordersDetail"]) +
             '<div class="d-flex justify-content-between align-items-center bottom">' +
-            '<span>訂單時間：' + orderdate + '</span>' +
+            '<span>訂單時間：' + $.format.date(TaiwanDateTime, 'yyyy/MM/dd HH:mm:ss') + '</span>' +
             '<div class="d-flex align-items-center">' +
             '<span>訂單金額</span>' +
             '<label>$' + totalprice + '</label>' +

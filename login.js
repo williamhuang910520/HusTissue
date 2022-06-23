@@ -1,4 +1,5 @@
-var backendurl="https://hustissueweb.azurewebsites.net/";
+var backendurl="https://hustissuewebapi.azurewebsites.net";
+var jsondata={}
 //修改這裡來改變api伺服器位置
 function LoginSubmit(email,password){
     var arr=
@@ -57,7 +58,6 @@ function LoginSubmit(email,password){
                 {
                     getmemberdata();
                 }
-                getordersdetail()
             }
             else
             {
@@ -126,7 +126,10 @@ function getmemberdata(){
         contentType: 'application/json',
         dataType: 'json',
         success: function(data){
-
+            var res={Orders:data};
+            $("#order-container").append(htmlOrder(res));
+            console.log("success")
+            return res;
         }
 
     });    
