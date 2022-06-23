@@ -59,8 +59,12 @@ function LoginSubmit(email,password){
                     if($.cookie('toorders'))
                     {
                         $.removeCookie('toorders');
-                        orderInfo_ViewAllOrderInfo();
-
+                        $("#account-sidebar-list>li").removeClass("onSelected");
+                        $("#account-sidebar-list>li").eq("1").addClass("onSelected");
+                        setTimeout(function(){
+                            orderInfo_ViewAllOrderInfo();
+                            console.log("I am the third log after 0.2 seconds");
+                        },200);
                         
                     }
                 }
