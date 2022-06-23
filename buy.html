@@ -345,12 +345,13 @@
         dataType: 'json',
         success: function(data){
             //carts=[];
-            alert("成功購買");
+            window.location="/account.html";
+            $.cookie('toorders',true)
         }
 
         });
 
-            window.location="/account.html";
+
             // TODO direct purchase
         }
     </script>

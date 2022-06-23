@@ -56,7 +56,12 @@ function LoginSubmit(email,password){
                 }
                 if(pathname=="/account.html")
                 {
-                    getmemberdata();
+                    if($.cookie('toorders'))
+                    {
+                        $.cookie('toorders',false);
+                        orderInfo_ViewAllOrderInfo();
+
+                    }
                 }
             }
             else
