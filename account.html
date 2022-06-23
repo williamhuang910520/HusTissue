@@ -2,7 +2,7 @@
 <html lang="tw">
 
 <head>
-    <title>HusTissue - Member</title>
+    <title>HusTissue - About Us</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,19 +27,19 @@
 
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <!--登入api-->
-    <script src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
     <script src="jquery.cookie.js"></script>
     <script src="login.js"></script>
     <!--登入api-->
 
     <script src="hide-navbar.js"></script>
-    <script src="render-orders.js"></script>
-    <!-- <script type="text/javascript" src="data-test.json"></script> -->
 
 </head>
 
-<body class="bg-dark">
+<body class="bg-dark about-us">
 
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
@@ -85,7 +85,7 @@
     <div class="container" style="margin-top: 130px">
         <div class="row">
             <div class="col-3 offset-1">
-                <div id="account-sidebar" class="account-sidebar ">
+                <div class="account-sidebar">
                     <div class="logo-content">
                         <img src="src/image/logo.png" width="130px" alt="">
                         <span>黃韋誠</span>
@@ -126,7 +126,7 @@
 
 
 
-    <!-- <section id="footer" class="container">
+    <section id="footer" class="container">
         <div class="row">
             <div class="col-12  footer">
                 <div class="footer-shop" x-ms-format-detection="none">
@@ -150,10 +150,9 @@
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
 
     <script type="text/babel">
-
         const {
             Button,
             colors,
@@ -317,8 +316,8 @@
 
         // render element
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        memberInfo_DiaplayUserInfo();
-        // orderInfo_ViewAllOrderInfo();
+        // memberInfo_DiaplayUserInfo();
+        orderInfo_ViewAllOrderInfo();
 
         function memberInfo_DiaplayUserInfo() {
             root.render(
@@ -358,21 +357,33 @@
                 </ThemeProvider>,
             );
 
-            console.log($("#order-container"));
+            // TODO: use jquery to operate element
+            let dataOrders;
+            let dataOrderDetial;
 
-            fetch("data-test.json")
-                .then(response => {
-                    return response.json();
-                })
-                .then(jsondata => {
-                    $("#order-container").append(htmlOrder(jsondata));
-                    // htmlOrder(jsondata);
-                    return console.log(jsondata);
-                });
+            function htmlOrderDetial(dataOrderDetial){
+                var htmlItem = "";
+                for(item in dataOrderDetial){
+                    let name
+                    let quantity
+                    let price
+                    htmlItem +=
+                        '<div class="order-detial-item list-group-item d-flex align-items-center flex-row">' +
+                        '< img src = ' + imgSrc + ' width = "130px" alt = "" >' +
+                        '<div class="text">' +
+                        '<h4>' + name + '</h4>' +
+                        '<small>x' + quantity + '</small>' +
+                        '</div>' +
+                        '<span>$' + price + '</span>' +
+                        '</div > ';
+                }
+                return htmlItem;
+            }
+
+
+            $("#order-container").append()
 
         }
-
-
     </script>
 </body>
 
