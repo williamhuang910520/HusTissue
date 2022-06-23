@@ -74,7 +74,7 @@
                             <a class="nav-link active" href="/buy.html">購買</a>
                         </li>
                     </ul>
-                    <img src="src/image/vtuber_hanji_2.jpg" width="40" height="40"
+                    <img src="src/image/logo.png" width="40" height="40"
                         class="d-inline-block align-text-top ">
 
                 </div>
@@ -202,6 +202,14 @@
                         break;
                     case "訂單資訊":
                         orderInfo_ViewAllOrderInfo();
+                        break;
+                    case "紅利點數":
+                        // orderInfo_ViewAllOrderInfo();
+                        Welcome2UnfinishedArea();
+                        break;
+                    case "我不知道":
+                        // orderInfo_ViewAllOrderInfo();
+                        Welcome2UnfinishedArea();
                         break;
                 }
                 // console.log($(this).find("span").text());
@@ -370,6 +378,34 @@
                     return console.log(jsondata);
                 });
 
+        }
+
+        
+
+        function Welcome2UnfinishedArea() {
+            root.render(
+                <ThemeProvider theme={theme}>
+                    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                    <CssBaseline />
+                    <Container maxWidth={false}>
+                        <section id="about-us-page1" class="page nopadding">
+                            <div className="p-5 bg-dark about-us-pageN">
+                                <div class="row ">
+                                    <h1 className="display-4 text-center">歡迎來到未完工的區域</h1>
+                                    <div className="col-6 offset-3">
+                                        <p className="text-center">
+                                            如果喜歡我們的作品的話
+                                            歡迎留下您的評價喔
+                                            BY:機器人後端工程師
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </Container>
+                </ThemeProvider>,
+            );
         }
 
 
